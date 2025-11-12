@@ -23,24 +23,15 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 | Tahap | Teknik yang Digunakan | Input | Output |
 |-------|------------------------|--------|--------|
 | **1. Preprocessing** | Resize (128×128), Grayscale, CLAHE, Gaussian Blur | `image: PIL` | `gray: np.ndarray` |
-| **2. Segmentasi (opsional)** | HSV Thresholding, Morphological Closing | `gray` | `mask: np.ndarray` |
+| **2. Segmentasi** | HSV Thresholding, Morphological Closing | `gray` | `mask: np.ndarray` |
 | **3. Ekstraksi Fitur** | Mean, Std, GLCM (Contrast, Energy, Homogeneity, Correlation) | `gray` / `mask` | `feature_vector: np.ndarray` |
 | **4. Klasifikasi** | Random Forest / SVM | `feature_vector` | `Label: Sehat / Penyakit` |
 | **5. Aplikasi Web** | Streamlit | `File Upload (gambar)` | Hasil Prediksi & Fitur |
 
+
 ---
 
-## Pipeline Alur Sistem (Mermaid Diagram)
-```mermaid
-flowchart LR
-A[Upload Gambar Daun Padi] --> B[Preprocessing<br/>(resize, grayscale, CLAHE, blur)]
-B --> C{Segmentasi?}
-C -- ya --> D[HSV Thresholding + Morphologi]
-C -- tidak --> E
-D --> E[Ekstraksi Fitur (GLCM + warna)]
-E --> F[Model Random Forest]
-F --> G[Prediksi: Sehat / Sakit]
-G --> H[Tampilan di Aplikasi Streamlit]
+
 
 ## Dataset 
 * **Sumber**: 
@@ -89,7 +80,7 @@ RICE-LEAF-DISEASE-ML/
 
 ## Setup (SEMUA ANGGOTA WAJIB)
 
-> Pastikan sudah install **Git** dan **Python 3.10+**.
+> Pastikan sudah install **Git** dan **Python 3.10+**
 
 ### 1) Clone repo
 ```bash
