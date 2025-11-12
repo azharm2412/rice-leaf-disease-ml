@@ -1,6 +1,16 @@
-__pycache__/
+# Abaikan environment lokal
+venv/
+.env/
+
+# Abaikan data besar
 data/raw/
 data/processed/
 models/*.pkl
-*.ipynb_checkpoints
-.env
+
+# Abaikan cache & sistem
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.DS_Store
+.ipynb_checkpoints/
