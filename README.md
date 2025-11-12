@@ -19,28 +19,28 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 --- 
 
 ## Technical Implementation (Pipeline)
-# src/preprocessing.py
-def preprocess_image(pil_img, size=(128,128), use_clahe=False, blur=True) -> np.ndarray: ...
 
-# src/segmentation.py (opsional)
-def segment_leaf(rgb_or_gray: np.ndarray, method="hsv") -> np.ndarray: ...
+| Tahap | Teknik yang Digunakan | Input | Output |
+|-------|------------------------|--------|--------|
+| **1. Preprocessing** | Resize (128×128), Grayscale, CLAHE, Gaussian Blur | `image: PIL` | `gray: np.ndarray` |
+| **2. Segmentasi (opsional)** | HSV Thresholding, Morphological Closing | `gray` | `mask: np.ndarray` |
+| **3. Ekstraksi Fitur** | Mean, Std, GLCM (Contrast, Energy, Homogeneity, Correlation) | `gray` / `mask` | `feature_vector: np.ndarray` |
+| **4. Klasifikasi** | Random Forest / SVM | `feature_vector` | `Label: Sehat / Penyakit` |
+| **5. Aplikasi Web** | Streamlit | `File Upload (gambar)` | Hasil Prediksi & Fitur |
 
-# src/feature_extraction.py
-def extract_features(gray: np.ndarray, mask: np.ndarray | None=None) -> np.ndarray:
-    """Return vector: [mean, std, glcm_contrast, glcm_energy, glcm_homogeneity, glcm_correlation, ...]"""
+---
 
-# src/train_model.py
-def train_and_save_model(X: np.ndarray, y: np.ndarray, out_path="models/rice_leaf_rf.pkl") -> None: ...
-
-## Diagram Alur 
+## Pipeline Alur Sistem (Mermaid Diagram)
+```mermaid
 flowchart LR
-A[Upload Gambar] --> B[Preprocessing<br/>resize, grayscale, (CLAHE, blur)]
-B --> C{Perlu Segmentasi?}
-C -- ya --> D[HSV/OTSU] --> E[Morfologi<br/>(opening/closing)]
+A[Upload Gambar Daun Padi] --> B[Preprocessing<br/>(resize, grayscale, CLAHE, blur)]
+B --> C{Segmentasi?}
+C -- ya --> D[HSV Thresholding + Morphologi]
 C -- tidak --> E
-E --> F[Ekstraksi Fitur<br/>(warna + GLCM + (LBP))]
-F --> G[Model ML<br/>Random Forest / SVM]
-G --> H[Prediksi: Sehat / Penyakit]
+D --> E[Ekstraksi Fitur (GLCM + warna)]
+E --> F[Model Random Forest]
+F --> G[Prediksi: Sehat / Sakit]
+G --> H[Tampilan di Aplikasi Streamlit]
 
 ## Dataset 
 * **Sumber**: 
@@ -48,6 +48,7 @@ G --> H[Prediksi: Sehat / Penyakit]
 * **Struktur**: 
 
 ## Struktur Proyek 
+```css
 RICE-LEAF-DISEASE-ML/
 ├── app/
 │   └── app.py
@@ -84,6 +85,7 @@ RICE-LEAF-DISEASE-ML/
 ├── .gitignore
 ├── README.md
 └── requirements.txt
+```
 
 ## Setup (SEMUA ANGGOTA WAJIB)
 
