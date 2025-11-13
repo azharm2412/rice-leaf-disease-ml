@@ -10,11 +10,11 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 ## Anggota Kelompok 
 | Nama | NIM | Tugas Utama | 
 |------|-----|-------------|
-| Azhar Maulana | 24/533487/PA/22582 | Lorem Ipsum | 
-| Dhimas Early Oceandy | 24/533508/PA/22584 | Lorem Ipsum | 
-| Evan Razzan Adytaputra | 24/545257/PA/23166 | Feature Extraction |
-| Herlina Iin Nur Soleha | 24/541333/PA/22962 |  |
-| Mikail Achmad | 24/542370/PA/23026 | Training Model | 
+| Azhar Maulana | 24/533487/PA/22582 | Project Leader & Model Evaluation  | 
+| Dhimas Early Oceandy | 24/533508/PA/22584 | Data Engineer & Prepocessing | 
+| Evan Razzan Adytaputra | 24/545257/PA/23166 | Feature Extraction Specialist |
+| Herlina Iin Nur Soleha | 24/541333/PA/22962 | Web Developer & Documentation |
+| Mikail Achmad | 24/542370/PA/23026 | Model Training Engineer| 
  
 --- 
 
