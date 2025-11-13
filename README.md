@@ -84,7 +84,7 @@ RICE-LEAF-DISEASE-ML/
 
 ### 1) Clone repo
 ```bash
-git clone https://github.com/<username>/RICE-LEAF-DISEASE-ML.git
+git clone https://github.com/azharm1224/RICE-LEAF-DISEASE-ML.git
 cd RICE-LEAF-DISEASE-ML
 ```
 ### 2) Buat virtual environment
