@@ -12,17 +12,17 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 |------|-----|-------------|
 | Azhar Maulana | 24/533487/PA/22582 | Lorem Ipsum | 
 | Dhimas Early Oceandy | 24/533508/PA/22584 | Lorem Ipsum | 
-| Evan Razzan Adytaputra | 24/545257/PA/23166 | Lorem Ipsum |
-| Herlina Iin Nur Soleha | 24/541333/PA/22962 | Lorem Ipsum |
-| Mikail Achmad | 24/542370/PA/23026 | Lorem Ipsum | 
+| Evan Razzan Adytaputra | 24/545257/PA/23166 | Feature Extraction |
+| Herlina Iin Nur Soleha | 24/541333/PA/22962 |  |
+| Mikail Achmad | 24/542370/PA/23026 | Training Model | 
  
 --- 
 
 ## Technical Implementation (Pipeline)
 
-| Tahap | Teknik yang Digunakan | Input | Output |
-|-------|------------------------|--------|--------|
-| **1. Preprocessing** | Resize (128×128), Grayscale, CLAHE, Gaussian Blur | `image: PIL` | `gray: np.ndarray` |
+| Tahap   | Teknik yang Digunakan | Input | Output |
+|---------    |------------------------|--------|--------|
+| **1. Preprocessing**   | Resize (128×128), Grayscale, CLAHE, Gaussian Blur | `image: PIL` | `gray: np.ndarray` |
 | **2. Segmentasi** | HSV Thresholding, Morphological Closing | `gray` | `mask: np.ndarray` |
 | **3. Ekstraksi Fitur** | Mean, Std, GLCM (Contrast, Energy, Homogeneity, Correlation) | `gray` / `mask` | `feature_vector: np.ndarray` |
 | **4. Klasifikasi** | Random Forest / SVM | `feature_vector` | `Label: Sehat / Penyakit` |
