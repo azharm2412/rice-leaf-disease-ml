@@ -6,3 +6,4 @@ scikit-image
 matplotlib
 streamlit
 joblib
+kagglehub
