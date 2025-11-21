@@ -1,0 +1,25 @@
+Model Final: XGBoost Tuned
+Best CV F1-macro: 0.8744
+
+Best Hyperparameters:
+subsample: 0.9
+n_estimators: 300
+min_child_weight: 1
+max_depth: 5
+learning_rate: 0.1
+gamma: 0
+colsample_bytree: 0.8
+
+Classification Report (Validation Set):
+                       precision    recall  f1-score   support
+
+bacterial_leaf_blight       0.97      0.96      0.96        70
+           brown_spot       0.89      0.83      0.86        75
+              healthy       0.76      0.91      0.83        74
+           leaf_blast       0.83      0.71      0.76        73
+           leaf_scald       0.96      0.92      0.94        72
+    narrow_brown_spot       0.93      1.00      0.97        70
+
+             accuracy                           0.88       434
+            macro avg       0.89      0.89      0.89       434
+         weighted avg       0.89      0.88      0.88       434

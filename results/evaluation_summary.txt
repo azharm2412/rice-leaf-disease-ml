@@ -1,0 +1,15 @@
+=== Model Evaluation Summary ===
+F1-macro: 0.8855
+
+                       precision    recall  f1-score   support
+
+bacterial_leaf_blight       0.97      0.96      0.96        70
+           brown_spot       0.89      0.83      0.86        75
+              healthy       0.76      0.91      0.83        74
+           leaf_blast       0.83      0.71      0.76        73
+           leaf_scald       0.96      0.92      0.94        72
+    narrow_brown_spot       0.93      1.00      0.97        70
+
+             accuracy                           0.88       434
+            macro avg       0.89      0.89      0.89       434
+         weighted avg       0.89      0.88      0.88       434
