@@ -35,13 +35,23 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 
 ## Dataset 
 * **Sumber**: Rice Leaf 5 diseases dari Ade Fiqri
+  
+  Mendeteksi penyakit dari daun padi
+  
+  Dengan tipe daun: daun bakteri layu, daun bercak cokelat, daun sehat, daun layu, bercak daun, dan bercak cokelat sempit
+  
   Link sumber dataset: https://www.kaggle.com/datasets/adefiqri12/riceleafsv3
-* **Total**: 2710 datasets at two category:
-2167 train at 6 directories:
+  
+* **Total**: 2710 dataset dalam dua kategori: train dan validation
+
+- 2167 train pada 6 direktori:
+
 350 bacterial_leaf_blight, 373 brown_spot, 371 healthy, 363 leaf_blast, 358 leaf_scaid, 352 narrow_brown_spot
 
-543 validation at 6 directories:
+- 543 validation pada 6 direktori:
+
 88 bacterial_leaf_blight, 93 brown_spot, 93 healthy, 91 leaf_blast, 90 leaf_scaid, 88 narrow_brown_spot
+
 * **Struktur**: 
 
 ## Struktur Proyek 
