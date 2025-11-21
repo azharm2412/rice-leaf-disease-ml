@@ -34,8 +34,14 @@ Pengguna dapat mengunggah foto daun padi dan langsung melihat hasil prediksinya,
 
 
 ## Dataset 
-* **Sumber**: 
-* **Total**: 
+* **Sumber**: Rice Leaf 5 diseases dari Ade Fiqri
+  Link sumber dataset: https://www.kaggle.com/datasets/adefiqri12/riceleafsv3
+* **Total**: 2710 datasets at two category:
+2167 train at 6 directories:
+350 bacterial_leaf_blight, 373 brown_spot, 371 healthy, 363 leaf_blast, 358 leaf_scaid, 352 narrow_brown_spot
+
+543 validation at 6 directories:
+88 bacterial_leaf_blight, 93 brown_spot, 93 healthy, 91 leaf_blast, 90 leaf_scaid, 88 narrow_brown_spot
 * **Struktur**: 
 
 ## Struktur Proyek 
