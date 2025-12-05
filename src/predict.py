@@ -43,7 +43,7 @@ FEATURE_COLS = [
 
 # load model 
 model = joblib.load(MODEL_PATH)
-
+# print("MODEL CLASS ORDER:", model.classes_)
 
 # fungsi segmentasi
 

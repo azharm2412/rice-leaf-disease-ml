@@ -4,29 +4,77 @@ import sys
 from pathlib import Path
 import time
 
-# --- SETUP PATH (Supaya bisa import src) ---
+def circular_progress(label, value, key):
+    container = st.empty()
+    steps = 40
+
+    for i in range(steps + 1):
+        current = value * (i / steps)
+        percentage = int(current * 100)
+
+        html = f"""
+        <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+            width: 150px;
+        ">
+            <div style="position: relative; width: 100px; height: 100px;">
+                <svg viewBox="0 0 36 36" width="100" height="100" style="transform: rotate(-90deg);">
+                   <circle
+                        cx="18" cy="18" r="15.9155"
+                        fill="none"
+                        stroke="#1e293b55"
+                        stroke-width="3"
+                    />
+                    <circle
+                        cx="18" cy="18" r="15.9155"
+                        fill="none"
+                        stroke="#10b981"
+                        stroke-width="3"
+                        stroke-dasharray="{percentage}, 100"
+                        style="transition: stroke-dasharray 0.05s ease-out;"
+                    />
+                </svg>
+                <div style="
+                    position: absolute; 
+                    top: 50%; left: 50%; 
+                    transform: translate(-50%, -50%); 
+                    color: white; 
+                    font-size: 15px; 
+                    font-weight: bold;
+                ">
+                    {percentage}%
+                </div>
+            </div>
+            <span style="color: #e2e8f0; font-size: 15px; text-align: center; white-space: nowrap;">
+                {label}
+            </span>
+        </div>
+        """
+
+        container.markdown(html, unsafe_allow_html=True)
+        time.sleep(0.02)
+
+#SETUP PATH (Supaya bisa import src)
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-# Coba import module prediksi Anda
-try:
-    from src.predict import predict_with_proba
-except ImportError:
-    # Dummy function jika file src belum siap (untuk testing UI)
-    def predict_with_proba(file_bytes):
-        return "brown_spot", {"brown_spot": 0.85, "healthy": 0.10, "leaf_blast": 0.05}, None, None
+#import module
+from src.predict import predict_with_proba
 
-# --- KONFIGURASI HALAMAN ---
+#config
 st.set_page_config(
-    page_title="RiceGuard AI - Disease Detection",
-    page_icon="🌿",
-    layout="wide", # Menggunakan layout wide agar kartu di bawah terlihat bagus
+    page_title="rAIce - Disease Detection",
+    # page_icon="🌿",
+    layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# --- SESSION STATE MANAGEMENT ---
-# Untuk mengatur navigasi antara Landing Page (Home) dan Halaman Analisis
+#st. management
+#navigasi antara Home Page dan Analysis Page
 if 'page' not in st.session_state:
     st.session_state.page = 'home'
 
@@ -36,32 +84,19 @@ def go_to_analysis():
 def go_home():
     st.session_state.page = 'home'
 
-# --- CSS STYLING (THEME: DARK GREEN & MODERN) ---
+#CSS STYLING
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-
-    /* Reset & Base Styles */
     body { font-family: 'Inter', sans-serif; }
     
-    /* Background Utama - Dark Green Gradient */
+    /* Background */
     .stApp {
         background-color: #020a05;
         background-image: radial-gradient(circle at 50% 0%, #0d3321 0%, #020a05 70%);
     }
 
-    /* Navbar / Header Text */
-    .nav-header {
-        color: #4ade80; /* Light Green */
-        font-size: 18px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 50px;
-    }
-
-    /* Hero Section */
+    /*Judul & tombol */
     .hero-container {
         text-align: center;
         padding: 40px 20px;
@@ -70,24 +105,24 @@ st.markdown("""
     }
 
     .main-title {
-        font-size: 64px; /* Ukuran besar seperti referensi */
+        font-size: 64px;
         font-weight: 700;
-        color: #6ee7b7; /* Cyan-Green */
+        color: #6ee7b7;
         margin-bottom: 20px;
         line-height: 1.1;
     }
 
     .sub-title {
         font-size: 20px;
-        color: #a7f3d0; /* Very light green/white */
+        color: #a7f3d0;
         font-weight: 300;
         margin-bottom: 40px;
         line-height: 1.6;
     }
 
-    /* Custom Button Style untuk meniru tombol biru di referensi */
+    /*Button Style*/
     div.stButton > button {
-        background-color: #10b981; /* Emerald Green */
+        background-color: #10b981; 
         color: white;
         font-size: 18px;
         font-weight: 600;
@@ -111,7 +146,7 @@ st.markdown("""
         margin-top: 60px;
     }
     
-    /* Individual Card styling mimicking the reference */
+    /*Card styling*/
     .feature-card {
         background: rgba(6, 78, 59, 0.2); /* Transparan dark green */
         border: 1px solid #34d399; /* Border hijau terang tipis */
@@ -146,7 +181,7 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Styling khusus untuk halaman upload (Analysis Page) */
+    /* Styling Analysis Page */
     .upload-box {
         background: #064e3b;
         padding: 30px;
@@ -164,12 +199,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- HALAMAN 1: LANDING PAGE (Mirip Screenshot) ---
-if st.session_state.page == 'home':
-    # Header Icon
-    st.markdown('<div class="nav-header">🌿 Plant Disease Diagnosis System</div>', unsafe_allow_html=True)
-    
-    # Hero Section (Judul & Tombol)
+#HOME PAGE
+if st.session_state.page == 'home':    
+    # Judul & Tombol
     st.markdown("""
         <div class="hero-container">
             <div class="main-title">Rice Leaf Disease<br>Analysis System</div>
@@ -190,7 +222,6 @@ if st.session_state.page == 'home':
     st.write("") 
     
     col1, col2, col3, col4 = st.columns(4)
-    
     with col1:
         st.markdown("""
             <div class="feature-card">
@@ -228,9 +259,9 @@ if st.session_state.page == 'home':
         """, unsafe_allow_html=True)
 
 
-# --- HALAMAN 2: ANALYSIS PAGE (Fungsionalitas Utama) ---
+#ANALYSIS PAGE
 elif st.session_state.page == 'analysis':
-    # Tombol Back (Kecil di pojok kiri)
+    # Tombol Back
     if st.button("← Back to Home"):
         go_home()
         st.rerun()
@@ -251,7 +282,7 @@ elif st.session_state.page == 'analysis':
             st.image(image, caption="Uploaded Image", use_container_width=True)
             
             # Tombol Analyze
-            analyze_clicked = st.button("🔍 Run Diagnosis", use_container_width=True)
+            analyze_clicked = st.button("Diagnosis", use_container_width=True)
 
     with col_result:
         st.markdown("### Diagnosis Result")
@@ -260,30 +291,27 @@ elif st.session_state.page == 'analysis':
             file_bytes = uploaded_file.getvalue()
             
             with st.spinner("Analyzing leaf patterns..."):
-                # Simulasi sedikit delay biar kerasa 'mikir'
                 time.sleep(1)
                 
-                # --- PANGGIL FUNGSI PREDIC DARI SRC ---
+                #call predic dari src
                 label_raw, proba_dict, _, _ = predict_with_proba(file_bytes)
             
             # Formatting Label
             label_clean = label_raw.replace("_", " ").title()
             confidence = proba_dict[label_raw] * 100
             
-            # Menentukan warna berdasarkan hasil
+            #warna berdasarkan hasil
             if label_raw == "healthy":
-                res_color = "#4ade80" # Hijau terang
-                emoji = "✅"
+                res_color = "#4ade80"
             else:
-                res_color = "#fb7185" # Merah rose
-                emoji = "⚠️"
+                res_color = "#D80032"
 
-            # Tampilan Hasil (Card Style)
+            #Hasil (Card Style)
             st.markdown(f"""
                 <div class="result-box">
                     <div style="font-size: 14px; color: #a7f3d0;">PREDICTED CONDITION</div>
                     <div style="font-size: 36px; font-weight: bold; color: {res_color};">
-                        {emoji} {label_clean}
+                        {label_clean}
                     </div>
                     <div style="font-size: 16px; color: white; margin-top: 10px;">
                         Confidence: <b>{confidence:.2f}%</b>
@@ -291,18 +319,37 @@ elif st.session_state.page == 'analysis':
                 </div>
             """, unsafe_allow_html=True)
             
-            # Breakdown Progress Bars
+            # # Breakdown Progress Bars
+            # st.markdown("<br><b>Detailed Probabilities:</b>", unsafe_allow_html=True)
+            
+            # # Sort probabilitas
+            # sorted_probs = dict(sorted(proba_dict.items(), key=lambda item: item[1], reverse=True))
+            
+            # for disease, prob in sorted_probs.items():
+            #     if prob > 0.01: # Tampilkan hanya yang > 1%
+            #         d_name = disease.replace("_", " ").title()
+            #         st.write(f"{d_name}")
+            #         st.progress(prob)
+            
             st.markdown("<br><b>Detailed Probabilities:</b>", unsafe_allow_html=True)
-            
-            # Sort probabilitas
+
+            # sort probabilitas
             sorted_probs = dict(sorted(proba_dict.items(), key=lambda item: item[1], reverse=True))
-            
-            for disease, prob in sorted_probs.items():
-                if prob > 0.01: # Tampilkan hanya yang > 1%
+
+            colA, colB = st.columns(2)
+            items = list(sorted_probs.items())
+
+            for i, (disease, prob) in enumerate(items):
+                if prob > 0.01:
                     d_name = disease.replace("_", " ").title()
-                    st.write(f"{d_name}")
-                    st.progress(prob)
-        
+
+                    if i % 2 == 0:
+                        with colA:
+                            circular_progress(d_name, prob, key=f"g{i}")
+                    else:
+                        with colB:
+                            circular_progress(d_name, prob, key=f"g{i}")
+
         elif not uploaded_file:
             st.info("Waiting for image upload...")
             st.markdown("""
